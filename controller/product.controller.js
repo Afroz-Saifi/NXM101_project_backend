@@ -2,9 +2,9 @@ const { productModel } = require("../model/product.model");
 
 const getAllProcucts = async (req, res) => {
   const { page } = req.query;
-  const pageNo = (page-1) * 6
+  const pageNo = (page-1) * 18
   try {
-    const productsData = await productModel.find().skip(pageNo).limit(6);
+    const productsData = await productModel.find().skip(pageNo).limit(18);
     if (productsData.length == 0) {
       return res.status(404).json({ msg: "products not found" });
     } else {
