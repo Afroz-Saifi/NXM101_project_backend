@@ -10,7 +10,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 app.use("/users", userRouter);
-app.use(authCheck);
+// app.use(authCheck);
 app.use("/products", productsRouter);
 
 app.listen(process.env.port, () => {
