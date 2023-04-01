@@ -18,8 +18,11 @@ const getAllProcucts = async (req, res) => {
     sortFilter.newprice = sort;
   }
   let filter = {
-    $and: [{ newprice: { $lt: max } }, { newprice: { $gt: min } }],
-    $and: [{ $or: brandies }, { $or: cats }],
+    $and: [
+      { newprice: { $lt: max } },
+      { newprice: { $gt: min } },
+      { $and: [{ $or: brandies }, { $or: cats }] },
+    ],
   };
 
   try {
