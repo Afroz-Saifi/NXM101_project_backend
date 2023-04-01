@@ -5,13 +5,22 @@ const getAllProcucts = async (req, res) => {
   const pageNo = (page - 1) * 18;
   const min = req.query.min || -Infinity;
   const max = req.query.max || Infinity;
+  const brands = req.query.brands;
+  let brandies = brands
+    .split(" ")
+    .map((ele) => ({ brand: { $regex: `${ele}` } }));
   let sortFilter = {};
   if (sort) {
     sortFilter.newprice = sort;
   }
+  let filter = {
+    $and: [{ newprice: { $lt: max } }, { newprice: { $gt: min } }],
+    $or: brandies,
+  };
+
   try {
     const productsData = await productModel
-      .find({$and: [{newprice: {$lt: max}}, {newprice: {$gt: min}}]})
+      .find(filter)
       .sort(sortFilter)
       .skip(pageNo)
       .limit(18);
