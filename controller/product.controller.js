@@ -5,7 +5,7 @@ const getAllProcucts = async (req, res) => {
   const pageNo = (page - 1) * 18;
   const min = req.query.min || -Infinity;
   const max = req.query.max || Infinity;
-  const brands = req.query.brands;
+  const brands = req.query.brands || "";
   let categories = req.query.cats || "";
   let brandies = brands
     .split(" ")
