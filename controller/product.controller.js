@@ -6,16 +6,20 @@ const getAllProcucts = async (req, res) => {
   const min = req.query.min || -Infinity;
   const max = req.query.max || Infinity;
   const brands = req.query.brands;
+  let categories = req.query.cats || "";
   let brandies = brands
     .split(" ")
     .map((ele) => ({ brand: { $regex: `${ele}` } }));
+  let cats = categories
+    .split(",")
+    .map((ele) => ({ microcategory: { $regex: `${ele}` } }));
   let sortFilter = {};
   if (sort) {
     sortFilter.newprice = sort;
   }
   let filter = {
     $and: [{ newprice: { $lt: max } }, { newprice: { $gt: min } }],
-    $or: brandies,
+    $and: [{ $or: brandies }, { $or: cats }],
   };
 
   try {
