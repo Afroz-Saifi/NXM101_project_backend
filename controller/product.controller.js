@@ -3,13 +3,15 @@ const { productModel } = require("../model/product.model");
 const getAllProcucts = async (req, res) => {
   const { page, sort } = req.query;
   const pageNo = (page - 1) * 18;
+  const min = req.query.min || -Infinity;
+  const max = req.query.max || Infinity;
   let sortFilter = {};
   if (sort) {
     sortFilter.newprice = sort;
   }
   try {
     const productsData = await productModel
-      .find()
+      .find({$and: [{newprice: {$lt: max}}, {newprice: {$gt: min}}]})
       .sort(sortFilter)
       .skip(pageNo)
       .limit(18);
