@@ -13,7 +13,21 @@ const add_to_bag = async (req, res) => {
     return res.status(400).json({ err: error });
   }
 };
-const get_bags = async (req, res) => {};
+
+const get_bags = async (req, res) => {
+  const token = req.headers.authorization.split(" ")[1];
+  const decoded = jwt.verify(token, "fw24_605");
+  const userId = decoded.userId;
+  try {
+    const bags_data = await bagModel.find({ userId: userId });
+    if (bags_data.length == 0) {
+      return res.status(404).json({ not_avail: "no products available" });
+    }
+    return res.status(200).json(bags_data);
+  } catch (error) {
+    return res.status(400).json({ err: error });
+  }
+};
 const delete_bag = async (req, res) => {};
 
 module.exports = { add_to_bag, get_bags, delete_bag };

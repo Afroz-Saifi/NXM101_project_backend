@@ -8,7 +8,7 @@ const {
 const bagRouter = express.Router();
 
 bagRouter.post("/add", add_to_bag);
-bagRouter.get("/get", get_bags);
+bagRouter.get("/", get_bags);
 bagRouter.delete("/delete", delete_bag);
 
 module.exports = { bagRouter };
