@@ -30,7 +30,7 @@ const get_bags = async (req, res) => {
 };
 const delete_bag = async (req, res) => {
   try {
-    bagModel.findByIdAndDelete(req.params.id);
+    await bagModel.findByIdAndDelete(req.params.id);
     return res.status(200).json({ msg: "removed form bag" });
   } catch (error) {
     return res.status(400).json({ err: error });
