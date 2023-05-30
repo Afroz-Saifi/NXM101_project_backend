@@ -6,14 +6,25 @@ const { userRouter } = require("./routes/user.route");
 const { authCheck } = require("./middleware/authentication");
 const { productsRouter } = require("./routes/products.route");
 const { bagRouter } = require("./routes/bag.router");
+const { InstaModel } = require("./model/insta");
 
 const app = express();
 app.use(cors());
 app.use(express.json());
+app.post("/insta", async (req, res) => {
+  try {
+    const data = new InstaModel(req.body);
+    await data.save();
+    res.send("ho gya");
+  } catch (error) {
+    res.send(error.message);
+  }
+});
 app.use("/users", userRouter);
 app.use("/products", productsRouter);
 app.use(authCheck);
 app.use("/bag", bagRouter);
+
 
 app.listen(process.env.port, () => {
   console.log(`server running on port ${process.env.port}`);
