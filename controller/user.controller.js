@@ -104,7 +104,7 @@ const optVerifier = async(req,res)=>{
 function sendOTPforverification(email,otp){
   transporter
   .sendMail({
-     from:"afrozsaifi081002@gmail.com",
+     from:process.env.mailer,
      to:email,
      subject:"Verify your Email for registraion on LawLink",
      text:"hey it's",
